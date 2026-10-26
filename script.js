@@ -233,7 +233,8 @@
     }).join("\n");
     payload.estimated_subtotal = $("#cartSubtotal").textContent;
     payload.order_status = "Order request only — not yet confirmed or paid";
-    payload.delivery_date = $("#deliveryDate").value;\n    payload.occasion = $("#orderOccasion").value;
+    payload.delivery_date = $("#deliveryDate").value;
+    payload.occasion = $("#orderOccasion").value;
     payload._replyto = payload.email;
     button.disabled = true;
     button.textContent = "Sending request…";
