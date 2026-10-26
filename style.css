@@ -16,3 +16,24 @@
 .order-form .checkout-button:disabled,.newsletter-form button:disabled{opacity:.6;cursor:wait}
 .order-form .form-message{margin:0;overflow-wrap:anywhere}
 @media(max-width:480px){.checkout-modal{padding:0;align-items:flex-end}.checkout-panel{max-height:94vh}.order-form{padding:18px 18px 24px}.checkout-panel .drawer-header{padding:18px}}
+
+.heading-links{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+.builder-section{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(30px,7vw,100px);align-items:center;padding-top:100px;padding-bottom:100px}
+.builder-intro h2{font-family:var(--serif);font-size:clamp(36px,4vw,58px);font-weight:500;line-height:1.12;letter-spacing:-.04em;margin:14px 0}
+.builder-intro h2 em{color:var(--pink-deep);font-weight:500}
+.builder-intro>p:not(.kicker){max-width:420px;color:var(--muted);font-size:13px}
+.builder-note{margin-top:22px;padding:14px 16px;background:var(--cream);border-left:2px solid var(--pink);color:var(--muted);font-size:11px;line-height:1.7}
+.builder-card{display:grid;grid-template-columns:1fr 1fr;gap:17px 15px;padding:clamp(20px,3vw,34px);border:1px solid var(--line);background:#fff;box-shadow:0 16px 45px #2923210b}
+.builder-field{display:flex;flex-direction:column;gap:7px;min-width:0}
+.builder-field label{font-size:11px;font-weight:700}
+.builder-field select,.builder-field textarea{width:100%;min-width:0;border:1px solid var(--line);background:var(--paper);padding:12px;color:var(--ink);font:inherit;font-size:12px;border-radius:0}
+.builder-field textarea{resize:vertical}
+.builder-wide{grid-column:1/-1}
+.builder-total{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;padding:15px 0;border-top:1px solid var(--line);font-size:12px}
+.builder-total strong{font-family:var(--serif);font-size:24px}
+.builder-card>.button{grid-column:1/-1;justify-content:space-between;width:100%}
+.builder-feedback{grid-column:1/-1;margin:0}
+.button-whatsapp{display:flex;justify-content:space-between;align-items:center;width:100%;padding:14px 18px;border:1px solid #50775b;background:#edf5ee;color:#294d34;font-size:12px;font-weight:700}
+.button-whatsapp:hover{background:#e0efe2}
+@media(max-width:760px){.builder-section{grid-template-columns:1fr;padding-top:65px;padding-bottom:65px;gap:25px}.builder-intro h2{font-size:42px}.heading-links{gap:14px}}
+@media(max-width:430px){.builder-card{grid-template-columns:1fr}.builder-wide,.builder-total,.builder-card>.button,.builder-feedback{grid-column:1}.builder-section{padding-left:var(--gutter);padding-right:var(--gutter)}}
