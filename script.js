@@ -12,6 +12,7 @@
   };
   const $ = (selector, root=document) => root.querySelector(selector);
   const formatMoney = value => "৳" + Math.round(Number(value) || 0).toLocaleString("en-BD");
+  const formatMoney = value => "৳" + Math.round(Number(value) || 0).toLocaleString("en-BD");
   const $$ = (selector, root=document) => [...root.querySelectorAll(selector)];
   const cart = new Map();
   let customSequence = 0;
@@ -237,7 +238,7 @@
     const payload = Object.fromEntries(new FormData(form).entries());
     payload.order_items = [...cart.entries()].map(([id,qty]) => {
       const p = products[id];
-      return qty + " × " + p.name + " — $" + (p.price * qty).toFixed(2) + (p.details ? " | " + JSON.stringify(p.details) : "");
+      return qty + " × " + p.name + " — " + formatMoney(p.price * qty) + (p.details ? " | " + JSON.stringify(p.details) : "");
     }).join("\n");
     payload.estimated_subtotal = $("#cartSubtotal").textContent;
     payload.order_status = "Order request only — not yet confirmed or paid";
