@@ -26,39 +26,20 @@ Deno.serve(async (req: Request) => {
     const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
     if (!url || !serviceKey) return response({ error: "Order service is not configured" }, 500);
     const admin = createClient(url, serviceKey, { auth: { persistSession: false } });
-    let total = 0;
-    const safeItems = [];
-    for (const item of body.items) {
-      const quantity = Number(item.quantity);
-      if (!Number.isInteger(quantity) || quantity < 1 || quantity > 99) return response({ error: "Invalid quantity" }, 400);
-      if (String(item.id).startsWith("custom-")) {
-        const d = item.details || {};
-        const sizes: Record<string, number> = { Small: 18, Medium: 30, Large: 48 };
-        const wraps: Record<string, number> = { "Classic kraft": 0, "Blush premium": 4, "Luxe fabric": 8 };
-        if (!(d.size in sizes) || !(d.wrapping in wraps)) return response({ error: "Invalid custom bouquet choices" }, 400);
-        const unit = sizes[d.size] + wraps[d.wrapping];
-        total += unit * quantity;
-        safeItems.push({ name: "Custom Bouquet", quantity, unit_price: unit, details: {
-          style: String(d.style || "").slice(0,80), size: d.size, wrapping: d.wrapping,
-          colour: String(d.colour || "").slice(0,80), cardMessage: String(d.cardMessage || "").slice(0,240)
-        }});
-      } else {
-        const { data: product, error } = await admin.from("products").select("id,name,price,active,stock").eq("id", String(item.id)).maybeSingle();
-        if (error || !product || !product.active) return response({ error: "A selected product is unavailable" }, 409);
-        if (product.stock < quantity) return response({ error: "Insufficient stock for " + product.name }, 409);
-        const unit = Number(product.price);
-        total += unit * quantity;
-        safeItems.push({ id: product.id, name: product.name, quantity, unit_price: unit });
-      }
+    const { data, error } = await admin.rpc("create_flowerine_order", {
+      p_customer_name: body.customer_name.trim(),
+      p_email: body.email.trim().toLowerCase(),
+      p_phone: body.phone.trim(),
+      p_delivery_address: body.delivery_address.trim(),
+      p_delivery_date: body.delivery_date,
+      p_occasion: body.occasion.trim().slice(0,80),
+      p_notes: String(body.notes || "").trim(),
+      p_items: body.items
+    });
+    if (error) {
+      const status = error.code === "P0001" || error.code === "P0002" ? 409 : error.code === "22023" ? 400 : 500;
+      return response({ error: status === 409 ? error.message : status === 400 ? "Invalid order details or items" : "Could not save order" }, status);
     }
-    if (!Number.isFinite(total) || total > 1000000) return response({ error: "Order total is invalid" }, 400);
-    const { data, error } = await admin.from("orders").insert({
-      customer_name: body.customer_name.trim(), email: body.email.trim().toLowerCase(),
-      phone: body.phone.trim(), delivery_address: body.delivery_address.trim(),
-      delivery_date: body.delivery_date, occasion: body.occasion.trim().slice(0,80),
-      notes: String(body.notes || "").trim(), items: safeItems, estimated_subtotal: total, status: "pending"
-    }).select("id,status,estimated_subtotal").single();
-    if (error) return response({ error: "Could not save order" }, 500);
     return response({ order: data }, 201);
   } catch {
     return response({ error: "Invalid request body" }, 400);
