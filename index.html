@@ -3,114 +3,88 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#fff7f8">
-  <meta name="description" content="Discover beautiful flowers and seasonal offers at Flowerine.">
+  <meta name="theme-color" content="#fff8f7">
+  <meta name="description" content="Shop thoughtfully arranged flowers, bouquets and gifts at Flowerine. Beautiful blooms for everyday moments and life's special occasions.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=3">
-  <title>Flowerine — Beautiful Flowers for Every Moment</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=5">
+  <title>Flowerine | Flowers for the moments that matter</title>
 </head>
 <body>
-  <header class="banner" id="home">
-    <div class="container">
-      <p class="eyebrow">Fresh blooms, thoughtful moments</p>
-      <h1 class="banneTitle">Let's make beautiful flowers a part of your life.</h1>
-      <p class="bannerDesc">Bring a little more colour, joy, and natural beauty into every day with flowers picked for life's special moments.</p>
-      <a class="bannerBtn" href="#flowers">Shop Now</a>
+  <div class="announcement">A little beauty goes a long way <span>✦</span> Discover your next favourite bloom</div>
+  <header class="site-header">
+    <a class="brand" href="#home" aria-label="Flowerine home"><span class="brand-mark">✿</span><span>flowerine<small>FLOWERS • WITH FEELING</small></span></a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Open navigation" aria-expanded="false">☰</button>
+    <nav class="main-nav" id="mainNav" aria-label="Main navigation">
+      <a href="#shop">Shop</a><a href="#collections">Collections</a><a href="#story">Our Story</a><a href="#reviews">Kind Words</a><a href="#faq">FAQs</a>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-button" id="searchToggle" aria-label="Search flowers" title="Search">⌕</button>
+      <button class="cart-button" id="cartToggle" aria-label="Open shopping bag">Bag <span id="cartCount">0</span></button>
     </div>
   </header>
+  <div class="search-bar" id="searchBar" hidden><label for="productSearch">Find your flowers</label><input id="productSearch" type="search" placeholder="Try roses, birthday, pink…"><button id="clearSearch" type="button">Clear</button></div>
 
   <main>
-    <section class="available section" id="flowers" aria-labelledby="available-title">
-      <div class="avInfo section-heading">
-        <h2 class="avTitle" id="available-title">Today's Available Flowers</h2>
-        <p class="avDesc">Find a favourite bloom for someone special—or just because.</p>
+    <section class="hero" id="home">
+      <div class="hero-copy">
+        <p class="kicker"><span></span> FLOWERS FOR THE MOMENTS THAT MATTER</p>
+        <h1>Make room for<br><em>a little beautiful.</em></h1>
+        <p class="hero-text">Thoughtful flowers, artfully gathered. From just-because gestures to once-in-a-lifetime moments, find a bouquet that says it for you.</p>
+        <div class="hero-actions"><a class="button button-dark" href="#shop">Shop the collection <span>↗</span></a><a class="text-link" href="#story">Get to know us <span>→</span></a></div>
+        <div class="hero-note"><div class="avatar-stack"><span>✿</span><span>❀</span><span>✽</span></div><p><strong>Made to make someone smile</strong><br><small>Every bouquet tells a little story.</small></p></div>
       </div>
-      <div class="card-container">
-        <article class="card">
-          <img src="images/flower1.png" alt="Pink flowering branch" class="flower" loading="lazy">
-          <div class="flowerDesc"><h3 class="flowerName">Pink China Cherry</h3><p class="flowerPrice">$17</p></div>
-        </article>
-        <article class="card">
-          <img src="images/flower2.png" alt="Soft pink flower arrangement" class="flower" loading="lazy">
-          <div class="flowerDesc"><h3 class="flowerName">Blush Blossom</h3><p class="flowerPrice">$17</p></div>
-        </article>
-        <article class="card">
-          <img src="images/flower3.png" alt="Fresh seasonal flowers" class="flower" loading="lazy">
-          <div class="flowerDesc"><h3 class="flowerName">Garden Delight</h3><p class="flowerPrice">$17</p></div>
-        </article>
-        <article class="card">
-          <img src="images/pngwing1.png" alt="Decorative pink flower" class="flower" loading="lazy">
-          <div class="flowerDesc"><h3 class="flowerName">Sweet Peony</h3><p class="flowerPrice">$17</p></div>
-        </article>
-        <article class="card">
-          <img src="images/pngwing2.png" alt="Elegant flower bloom" class="flower" loading="lazy">
-          <div class="flowerDesc"><h3 class="flowerName">Rosy Charm</h3><p class="flowerPrice">$17</p></div>
-        </article>
-        <article class="card">
-          <img src="images/pngwing3.png" alt="Colourful seasonal bloom" class="flower" loading="lazy">
-          <div class="flowerDesc"><h3 class="flowerName">Spring Whisper</h3><p class="flowerPrice">$17</p></div>
-        </article>
+      <div class="hero-art">
+        <div class="hero-image-wrap"><img src="images/Rectangle.png" alt="A soft, romantic floral scene" fetchpriority="high"></div>
+        <div class="hero-sticker"><span>FRESH</span><strong>blooms</strong><span>HAPPY HEARTS</span></div>
+        <div class="hero-caption"><span>01 / 03</span><span>THE EVERYDAY MAGIC EDIT</span></div>
       </div>
-      <a class="see-more-button" href="#featured">Explore Featured Flowers</a>
+      <div class="hero-deco deco-one">✳</div><div class="hero-deco deco-two">✿</div>
     </section>
 
-    <section class="feature section" id="featured" aria-labelledby="feature-title">
-      <div class="featureInfo section-heading">
-        <h2 class="featureTitle" id="feature-title">Our Featured Flowers</h2>
-        <p class="featureDesc">A hand-picked selection to make your moments feel a little more memorable.</p>
-      </div>
-      <div class="featureContainer">
-        <article class="featureCard">
-          <img src="images/pngwing4.png" class="featureImg" alt="Featured pink flower" loading="lazy">
-          <div class="featuredFLower"><h3 class="featureName">Pink China Cherry</h3><p class="featurePrice">$17</p></div>
-        </article>
-        <article class="featureCard">
-          <img src="images/pngwing4.png" class="featureImg" alt="Featured flower arrangement" loading="lazy">
-          <div class="featuredFLower"><h3 class="featureName">Blush Collection</h3><p class="featurePrice">$19</p></div>
-        </article>
-        <article class="featureCard">
-          <img src="images/pngwing4.png" class="featureImg" alt="Featured seasonal bloom" loading="lazy">
-          <div class="featuredFLower"><h3 class="featureName">Petal Promise</h3><p class="featurePrice">$21</p></div>
-        </article>
-        <article class="featureCard">
-          <img src="images/pngwing4.png" class="featureImg" alt="Featured floral gift" loading="lazy">
-          <div class="featuredFLower"><h3 class="featureName">Garden Romance</h3><p class="featurePrice">$18</p></div>
-        </article>
-      </div>
+    <section class="promise-strip" aria-label="Our promises">
+      <div><span class="promise-icon">✿</span><p><strong>Thoughtfully arranged</strong><small>Every detail, considered</small></p></div>
+      <div><span class="promise-icon">♡</span><p><strong>Made for meaningful moments</strong><small>Big days and little ones</small></p></div>
+      <div><span class="promise-icon">✧</span><p><strong>A gift that feels personal</strong><small>Choose a little joy</small></p></div>
     </section>
 
-    <section class="dealContainer" id="offer" aria-labelledby="deal-title">
-      <div class="dealLeft">
-        <p class="hurry">A little something for you</p>
-        <h2 class="dealLeftTitle" id="deal-title">Hot Deal! Sale Up To 25% <span class="off">Off</span></h2>
-        <p class="dealDesc">Celebrate the season with beautiful blooms at a special price. Find your next favourite arrangement today.</p>
-        <div class="dealBtn" aria-label="Special sale highlights">
-          <div class="dealBtnText"><span class="dealBtnTextTitle">25%</span><span class="dealBtnTextSm">off</span></div>
-          <div class="dealBtnText"><span class="dealBtnTextTitle">Fresh</span><span class="dealBtnTextSm">blooms</span></div>
-          <div class="dealBtnText"><span class="dealBtnTextTitle">All</span><span class="dealBtnTextSm">season</span></div>
-        </div>
-        <a class="dealShop" href="#flowers">Shop the Sale</a>
+    <section class="shop-section section-shell" id="shop">
+      <div class="section-heading heading-row"><div><p class="kicker">THE FLOWERINE EDIT</p><h2>Flowers to fall for<span>.</span></h2><p class="section-subtitle">A few lovely things, selected to brighten someone's day.</p></div><a class="text-link desktop-link" href="#collections">Explore collections <span>→</span></a></div>
+      <div class="shop-toolbar"><div class="filter-list" role="group" aria-label="Filter products"><button class="filter-chip active" data-filter="all">All flowers</button><button class="filter-chip" data-filter="bouquet">Bouquets</button><button class="filter-chip" data-filter="romance">Romance</button><button class="filter-chip" data-filter="everyday">Just because</button><button class="filter-chip" data-filter="gift">Gifts</button></div><span id="resultCount" class="result-count">8 lovely finds</span></div>
+      <div class="product-grid" id="productGrid">
+        <article class="product-card" data-id="blush" data-category="bouquet romance" data-name="Blush Hour Bouquet" data-price="32"><div class="product-image"><span class="product-tag">BEST LOVED</span><button class="wishlist" aria-label="Save Blush Hour Bouquet" aria-pressed="false">♡</button><img src="images/flower1.png" alt="Blush Hour pink floral bouquet" loading="lazy"><button class="quick-add" data-add="blush">Add to bag <span>＋</span></button></div><div class="product-info"><div><h3>Blush Hour Bouquet</h3><p>Soft pinks, effortless romance</p></div><strong>$32</strong></div></article>
+        <article class="product-card" data-id="cherry" data-category="bouquet everyday" data-name="Cherry Blossom Daydream" data-price="28"><div class="product-image"><span class="product-tag tag-new">A LITTLE JOY</span><button class="wishlist" aria-label="Save Cherry Blossom Daydream" aria-pressed="false">♡</button><img src="images/flower2.png" alt="Cherry Blossom Daydream flowers" loading="lazy"><button class="quick-add" data-add="cherry">Add to bag <span>＋</span></button></div><div class="product-info"><div><h3>Cherry Blossom Daydream</h3><p>Light, airy and full of charm</p></div><strong>$28</strong></div></article>
+        <article class="product-card" data-id="garden" data-category="bouquet everyday" data-name="The Garden Party" data-price="36"><div class="product-image"><button class="wishlist" aria-label="Save The Garden Party" aria-pressed="false">♡</button><img src="images/flower3.png" alt="The Garden Party floral arrangement" loading="lazy"><button class="quick-add" data-add="garden">Add to bag <span>＋</span></button></div><div class="product-info"><div><h3>The Garden Party</h3><p>A joyful mix of garden-inspired blooms</p></div><strong>$36</strong></div></article>
+        <article class="product-card" data-id="peony" data-category="romance gift" data-name="Peony Promise" data-price="42"><div class="product-image"><span class="product-tag">SPECIAL PICK</span><button class="wishlist" aria-label="Save Peony Promise" aria-pressed="false">♡</button><img src="images/pngwing1.png" alt="Peony Promise floral gift" loading="lazy"><button class="quick-add" data-add="peony">Add to bag <span>＋</span></button></div><div class="product-info"><div><h3>Peony Promise</h3><p>A graceful gesture from the heart</p></div><strong>$42</strong></div></article>
+        <article class="product-card" data-id="rosy" data-category="bouquet romance" data-name="Rosy Ever After" data-price="38"><div class="product-image"><button class="wishlist" aria-label="Save Rosy Ever After" aria-pressed="false">♡</button><img src="images/pngwing2.png" alt="Rosy Ever After bouquet" loading="lazy"><button class="quick-add" data-add="rosy">Add to bag <span>＋</span></button></div><div class="product-info"><div><h3>Rosy Ever After</h3><p>Classic romance, with a fresh twist</p></div><strong>$38</strong></div></article>
+        <article class="product-card" data-id="spring" data-category="everyday gift" data-name="A Spring Whisper" data-price="25"><div class="product-image"><span class="product-tag tag-new">FEEL-GOOD FAVOURITE</span><button class="wishlist" aria-label="Save A Spring Whisper" aria-pressed="false">♡</button><img src="images/pngwing3.png" alt="A Spring Whisper seasonal flowers" loading="lazy"><button class="quick-add" data-add="spring">Add to bag <span>＋</span></button></div><div class="product-info"><div><h3>A Spring Whisper</h3><p>A small surprise with a big heart</p></div><strong>$25</strong></div></article>
+        <article class="product-card" data-id="signature" data-category="gift romance" data-name="The Signature Stem" data-price="30"><div class="product-image"><button class="wishlist" aria-label="Save The Signature Stem" aria-pressed="false">♡</button><img src="images/pngwing4.png" alt="The Signature Stem floral arrangement" loading="lazy"><button class="quick-add" data-add="signature">Add to bag <span>＋</span></button></div><div class="product-info"><div><h3>The Signature Stem</h3><p>Understated, elegant, unforgettable</p></div><strong>$30</strong></div></article>
+        <article class="product-card" data-id="celebrate" data-category="gift bouquet" data-name="Little Celebration" data-price="45"><div class="product-image"><span class="product-tag">MAKE IT A MOMENT</span><button class="wishlist" aria-label="Save Little Celebration" aria-pressed="false">♡</button><img src="images/pngwing8.png" alt="Little Celebration floral gift" loading="lazy"><button class="quick-add" data-add="celebrate">Add to bag <span>＋</span></button></div><div class="product-info"><div><h3>Little Celebration</h3><p>For birthdays, milestones and more</p></div><strong>$45</strong></div></article>
       </div>
-      <div class="dealRight">
-        <img src="images/pngwing8.png" class="dealImg" alt="Flower arrangement featured in the seasonal sale" loading="lazy">
-      </div>
+      <p class="empty-state" id="emptyState" hidden>No flowers found for that search. Try another name or category.</p>
+      <p class="catalog-note">Product names, images and prices are demo content and can be replaced with your real catalogue.</p>
     </section>
+
+    <section class="collection-band" id="collections">
+      <div class="collection-copy"><p class="kicker">A GIFT THAT FEELS LIKE YOU</p><h2>Not just flowers.<br><em>A feeling.</em></h2><p>For the thank-yous, the new beginnings, the “I saw this and thought of you” moments. Find a way to say it without saying a word.</p><a class="button button-light" href="#shop">Find your flowers <span>↗</span></a></div>
+      <div class="collection-image"><img src="images/pngwing8.png" alt="A special floral arrangement" loading="lazy"><div class="round-note">A LITTLE<br>JOY, DELIVERED</div></div>
+    </section>
+
+    <section class="story-section section-shell" id="story"><div class="story-visual"><img src="images/flower3.png" alt="Flowers selected with care" loading="lazy"><span class="story-seal">FLOWERINE<br>WITH FEELING</span></div><div class="story-copy"><p class="kicker">A NOTE FROM US</p><h2>Beauty is in the<br><em>little things.</em></h2><p>We believe flowers don't need a reason. A bunch on the kitchen table, a thoughtful surprise, a fresh start after a long week—little gestures have a way of making ordinary days feel special.</p><p>Flowerine is a celebration of those moments: considered choices, joyful colour, and the simple art of making someone feel remembered.</p><a class="text-link" href="#contact">Say hello to Flowerine <span>→</span></a></div></section>
+
+    <section class="review-section" id="reviews"><div class="section-shell"><div class="section-heading centered"><p class="kicker">KIND WORDS, BIG FEELINGS</p><h2>Love looks good on you<span>.</span></h2><p class="section-subtitle">A few notes from our imaginary bouquet-loving community.</p></div><div class="review-grid"><article class="review-card"><div class="stars">★★★★★</div><blockquote>“The kind of flowers that make you stop what you're doing and just smile.”</blockquote><p class="review-author"><span>J</span><strong>Jamie R.</strong><small>THE FLOWER LOVER</small></p></article><article class="review-card review-featured"><div class="stars">★★★★★</div><blockquote>“Every detail felt thoughtful. It was more than a bouquet—it felt like a little celebration.”</blockquote><p class="review-author"><span>M</span><strong>Morgan L.</strong><small>THE THOUGHTFUL GIVER</small></p></article><article class="review-card"><div class="stars">★★★★★</div><blockquote>“A beautiful reminder that you don't need a big occasion to make someone's day.”</blockquote><p class="review-author"><span>A</span><strong>Alex T.</strong><small>THE JUST-BECAUSE GIFT</small></p></article></div><p class="catalog-note">Testimonials above are illustrative placeholders, not verified customer reviews.</p></div></section>
+
+    <section class="faq-section section-shell" id="faq"><div class="faq-intro"><p class="kicker">THE LITTLE DETAILS</p><h2>A few things<br><em>you might wonder.</em></h2><p>Good things should feel easy. Here are a few helpful notes.</p><a class="text-link" href="#contact">Still curious? Get in touch <span>→</span></a></div><div class="faq-list"><details><summary>Can I order flowers online right now?<span>＋</span></summary><p>This site is currently a front-end showcase. The shopping bag is interactive, but payment, order processing and delivery need to be connected before real orders can be accepted.</p></details><details><summary>Can I personalise a bouquet?<span>＋</span></summary><p>Personalisation can be added when the real catalogue and order process are configured. You could offer message cards, colour preferences or occasion-based arrangements.</p></details><details><summary>Do you offer same-day delivery?<span>＋</span></summary><p>Delivery areas, prices and timing have not been configured yet. Add your actual delivery policy before publishing this as a live store.</p></details><details><summary>Are the prices and reviews real?<span>＋</span></summary><p>No. The current product details, prices and sample testimonials are placeholders to demonstrate the design. Replace them with accurate business information.</p></details></div></section>
+
+    <section class="newsletter-section"><div><p class="kicker">A LITTLE NOTE FROM FLOWERINE</p><h2>Good things are <em>in bloom.</em></h2><p>Get a little inspiration for making ordinary days feel special.</p></div><form id="newsletterForm" class="newsletter-form"><label class="sr-only" for="newsletterEmail">Email address</label><input id="newsletterEmail" type="email" placeholder="Your email address" required><button type="submit" class="button button-dark">Count me in <span>↗</span></button><p id="newsletterMessage" class="form-message" aria-live="polite">Demo form only — no emails are stored or sent.</p></form></section>
   </main>
 
-  <footer class="footerContainer" id="contact">
-    <a class="footerTitle" href="#home">Flowerine</a>
-    <p class="footerDesc">Thoughtful flowers for everyday moments and the occasions that matter.</p>
-    <a class="portfolioLink" href="https://rakib-orion.vercel.app/" target="_blank" rel="noopener noreferrer">Explore My Portfolio ↗</a>
-    <nav class="footerMenu" aria-label="Footer navigation">
-      <a href="#flowers">Send Flowers</a>
-      <a href="#featured">Featured</a>
-      <a href="#offer">Offers</a>
-      <a href="#contact">Contact</a>
-      <a href="https://rakib-orion.vercel.app/" target="_blank" rel="noopener noreferrer">My Portfolio</a>
-    </nav>
-    <p class="copyright">© Flowerine. Made with care.</p>
-  </footer>
+  <footer class="site-footer" id="contact"><div class="footer-main"><div class="footer-brand"><a class="brand brand-footer" href="#home"><span class="brand-mark">✿</span><span>flowerine<small>FLOWERS • WITH FEELING</small></span></a><p>For the moments that matter, and all the little ones in between.</p></div><div class="footer-column"><h3>EXPLORE</h3><a href="#shop">Shop flowers</a><a href="#collections">Collections</a><a href="#story">Our story</a></div><div class="footer-column"><h3>NEED TO KNOW</h3><a href="#faq">FAQs</a><a href="#contact">Contact</a><a href="https://rakib-orion.vercel.app/" target="_blank" rel="noopener noreferrer">Developer portfolio ↗</a></div><div class="footer-contact"><h3>LET'S CONNECT</h3><p>This is a demo storefront. Add your business email and contact details here.</p><a class="footer-portfolio" href="https://rakib-orion.vercel.app/" target="_blank" rel="noopener noreferrer">Built by Rakib · View portfolio ↗</a></div></div><div class="footer-bottom"><span>© <span id="year"></span> Flowerine. Made with feeling.</span><a href="#home">Back to the top ↑</a><span>Design concept · Demo store</span></div></footer>
+
+  <div class="drawer-backdrop" id="drawerBackdrop" hidden></div>
+  <aside class="cart-drawer" id="cartDrawer" aria-labelledby="cartTitle" aria-modal="true" role="dialog" hidden><div class="drawer-header"><div><p class="kicker">YOUR LITTLE BUNDLE</p><h2 id="cartTitle">Your bag <span id="drawerCount">(0)</span></h2></div><button id="cartClose" class="drawer-close" aria-label="Close bag">×</button></div><div class="cart-items" id="cartItems"><p class="cart-empty">Your bag is waiting for something lovely. ♡</p></div><div class="cart-footer"><div class="subtotal-row"><span>Subtotal</span><strong id="cartSubtotal">$0.00</strong></div><p class="cart-disclaimer">Demo only: checkout and payment are not connected.</p><button class="button button-dark checkout-button" id="checkoutButton">Review order <span>↗</span></button><button class="continue-shopping" id="continueShopping">Keep looking</button></div></aside>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="script.js?v=1" defer></script>
 </body>
 </html>
