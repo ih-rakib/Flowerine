@@ -233,7 +233,22 @@
     button.textContent = "Sending request…";
     message.textContent = "Submitting your order request…";
     try {
-      await sendToInbox(payload, "Flowerine — new order request");
+      if (supabaseClient) {
+        const orderBody = {
+          customer_name: payload.customer_name, email: payload.email, phone: payload.phone,
+          delivery_address: payload.delivery_address, delivery_date: payload.delivery_date,
+          occasion: payload.occasion, notes: payload.notes || "",
+          items: [...cart.entries()].map(([id, quantity]) => ({
+            id, quantity, details: products[id].details || null
+          }))
+        };
+        const {data,error} = await supabaseClient.functions.invoke("create-order", {body: orderBody});
+        if (error || !data?.order?.id) throw new Error(data?.error || error?.message || "Order service did not accept the request.");
+        message.textContent = "Your order request was saved. Reference: " + data.order.id + ". The shop will contact you to confirm details.";
+      } else {
+        await sendToInbox(payload, "Flowerine — new order request");
+        message.textContent = "Your request was emailed. The shop will contact you to confirm details.";
+      }
       message.textContent = "Your request was sent. The shop will contact you to confirm details.";
       showToast("Order request sent successfully");
       cart.clear();
