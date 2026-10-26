@@ -87,6 +87,8 @@
     button.setAttribute("aria-pressed", String(saved)); button.textContent = saved ? "♥" : "♡";
     showToast(saved ? "Saved to your favourites" : "Removed from your favourites");
   }));
+  }
+  bindProductActions();
   function renderCart(){
     persistCart();
     const count = [...cart.values()].reduce((sum,n) => sum+n,0);
