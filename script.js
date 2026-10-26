@@ -8,7 +8,15 @@
     rosy:{name:"Rosy Ever After",price:3800,image:"images/pngwing2.png"},
     spring:{name:"A Spring Whisper",price:2500,image:"images/pngwing3.png"},
     signature:{name:"The Signature Stem",price:3000,image:"images/pngwing4.png"},
-    celebrate:{name:"Little Celebration",price:4500,image:"images/pngwing8.png"}
+    celebrate:{name:"Little Celebration",price:4500,image:"images/pngwing8.png"},
+    sunrise:{name:"Golden Sunrise Roses",price:3400,image:"images/pngwing5.png"},
+    lavender:{name:"Lavender Haze",price:3300,image:"images/pngwing6.png"},
+    ivory:{name:"Ivory Elegance",price:3900,image:"images/pngwing7.png"},
+    ruby:{name:"Ruby Red Romance",price:4100,image:"images/pngwing2.png"},
+    pastel:{name:"Pastel Petal Cloud",price:3100,image:"images/flower2.png"},
+    tropical:{name:"Tropical Celebration",price:3700,image:"images/pngwing8.png"},
+    white:{name:"White Lily Serenity",price:3500,image:"images/pngwing4.png"},
+    sunset:{name:"Sunset Garden Mix",price:3600,image:"images/flower3.png"}
   };
   const $ = (selector, root=document) => root.querySelector(selector);
   const formatMoney = value => "৳" + Number(value || 0).toLocaleString("en-BD",{maximumFractionDigits:2,minimumFractionDigits:0});
