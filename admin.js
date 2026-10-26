@@ -19,7 +19,7 @@ $$adminTabs();
 function $$adminTabs(){$$(".admin-tabs button").forEach(btn=>btn.addEventListener("click",()=>{ $$(".admin-tabs button").forEach(b=>b.classList.toggle("active",b===btn));$("#productsTab").hidden=btn.dataset.adminTab!=="products";$("#ordersTab").hidden=btn.dataset.adminTab!=="orders";if(btn.dataset.adminTab==="orders")loadOrders();}));}
 async function loadProducts(){
  const box=$("#productTable");box.innerHTML="<p>Loading inventory…</p>";
- const {data,error}=await client.from("products").select("id,name,price,stock,active,categories").order("name");
+ const {data,error}=await client.from("products").select("id,name,description,image_url,price,stock,active,categories").order("name");
  if(error){box.innerHTML='<p class="admin-error">Could not load products. Confirm the SQL migration and admin permissions.</p>';return;}
  if(!data.length){box.innerHTML="<p>No database products yet. Add your first product using the form above.</p>";return;}
  box.innerHTML='<div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Product</th><th>Price</th><th>Stock</th><th>Visibility</th><th>Action</th></tr></thead><tbody>'+data.map(p=>'<tr><td>'+escapeHtml(p.name)+'<small>'+escapeHtml((p.categories||[]).join(", "))+'</small></td><td>$'+Number(p.price).toFixed(2)+'</td><td>'+p.stock+'</td><td>'+(p.active?"Visible":"Hidden")+'</td><td><button class="admin-small" data-edit-product="'+p.id+'">Edit</button></td></tr>').join("")+'</tbody></table></div>';
