@@ -12,7 +12,6 @@
   };
   const $ = (selector, root=document) => root.querySelector(selector);
   const formatMoney = value => "৳" + Math.round(Number(value) || 0).toLocaleString("en-BD");
-  const formatMoney = value => "৳" + Math.round(Number(value) || 0).toLocaleString("en-BD");
   const $$ = (selector, root=document) => [...root.querySelectorAll(selector)];
   const cart = new Map();
   let customSequence = 0;
