@@ -38,9 +38,13 @@ The order function is public because customers do not sign in at checkout. It us
 
 **Before public production use:** add server-side rate limiting and CAPTCHA/bot protection to the public order function, review privacy/retention requirements for customer details, and test failed orders, stock races and email notifications. The current function saves the order but does not send an email notification by itself.
 
-## 4. Configure WhatsApp
+## 4. Bangladesh currency and WhatsApp
 
-Set `window.FLOWERINE_WHATSAPP_NUMBER` in `supabase-config.js` to the store's international phone number using digits only (for example, Bangladesh numbers start with country code `880`, without the leading local `0`). Leave it blank to keep WhatsApp checkout disabled. Customers must review and press Send in WhatsApp.
+The storefront and admin dashboard display prices in Bangladeshi taka (BDT / ৳). Enter all product prices in BDT in the admin dashboard. Custom bouquet prices are Small ৳1,800, Medium ৳3,000 and Large ৳4,800, with optional wrapping at ৳400 or ৳800. The matching SQL function validates and calculates these amounts server-side, and saved orders record currency `BDT`.
+
+The store WhatsApp number is configured in `supabase-config.js`. Customers must review and press Send in WhatsApp.
+
+Before accepting orders, run `supabase/migrations/202610260003_bdt_currency.sql` in the Supabase SQL Editor so the database stores currency `BDT` and validates custom bouquet prices in taka.
 
 ## 5. Add real catalogue data
 
