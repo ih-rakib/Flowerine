@@ -75,7 +75,8 @@
   $$("#mainNav a").forEach(link => link.addEventListener("click", () => {
     $("#mainNav").classList.remove("open"); $("#menuToggle").setAttribute("aria-expanded","false"); $("#menuToggle").textContent = "☰";
   }));
-  function bindProductActions() {\n  $(".quick-add", grid).forEach(button => button.addEventListener("click", () => {
+  function bindProductActions() {
+  $(".quick-add", grid).forEach(button => button.addEventListener("click", () => {
     const id = button.dataset.add;
     const currentQty = cart.get(id) || 0;
     if (currentQty >= 99) { showToast("Maximum quantity for one item is 99."); return; }
@@ -167,7 +168,7 @@
     const msg = ["Hello Flowerine, I'd like to request this order:",...lines,"Estimated subtotal: " + $("#cartSubtotal").textContent,
       "Name: " + $("#orderName").value,"Email: " + $("#orderEmail").value,"Phone: " + $("#orderPhone").value,
       "Delivery address: " + $("#orderAddress").value,"Delivery date: " + deliveryDateInput.value,"Occasion: " + $("#orderOccasion").value,
-      "Notes: " + ($("#orderNotes").value || "None"),"Please confirm availability, delivery charges and payment details."].join("\\n");
+      "Notes: " + ($("#orderNotes").value || "None"),"Please confirm availability, delivery charges and payment details."].join("\n");
     window.open("https://wa.me/" + number + "?text=" + encodeURIComponent(msg), "_blank", "noopener,noreferrer");
   });
   async function loadSupabaseProducts() {
