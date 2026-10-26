@@ -13,6 +13,21 @@
   const $ = (selector, root=document) => root.querySelector(selector);
   const $$ = (selector, root=document) => [...root.querySelectorAll(selector)];
   const cart = new Map();
+  // Restore the customer's bag between visits on the same browser.
+  try {
+    const savedCart = JSON.parse(localStorage.getItem("flowerine-cart") || "[]");
+    if (Array.isArray(savedCart)) {
+      savedCart.forEach(entry => {
+        if (!Array.isArray(entry) || entry.length !== 2) return;
+        const [id, qty] = entry;
+        if (products[id] && Number.isInteger(qty) && qty > 0 && qty <= 99) cart.set(id, qty);
+      });
+    }
+  } catch (_) { /* Storage may be unavailable; the in-memory bag still works. */ }
+  function persistCart() {
+    try { localStorage.setItem("flowerine-cart", JSON.stringify([...cart.entries()])); }
+    catch (_) { /* Shopping still works for the current page if storage is blocked. */ }
+  }
   const grid = $("#productGrid");
   const drawer = $("#cartDrawer");
   const backdrop = $("#drawerBackdrop");
@@ -57,7 +72,9 @@
   }));
   $$(".quick-add").forEach(button => button.addEventListener("click", () => {
     const id = button.dataset.add;
-    cart.set(id, (cart.get(id) || 0) + 1);
+    const currentQty = cart.get(id) || 0;
+    if (currentQty >= 99) { showToast("Maximum quantity for one item is 99."); return; }
+    cart.set(id, currentQty + 1);
     renderCart(); showToast(products[id].name + " added to your bag");
   }));
   $$(".wishlist").forEach(button => button.addEventListener("click", () => {
@@ -66,6 +83,7 @@
     showToast(saved ? "Saved to your favourites" : "Removed from your favourites");
   }));
   function renderCart(){
+    persistCart();
     const count = [...cart.values()].reduce((sum,n) => sum+n,0);
     $("#cartCount").textContent = count; $("#drawerCount").textContent = "(" + count + ")";
     const items = $("#cartItems");
@@ -84,7 +102,7 @@
     const removeButton = event.target.closest("[data-remove]");
     if (qtyButton) {
       const id = qtyButton.dataset.id, next = (cart.get(id)||0) + Number(qtyButton.dataset.qty);
-      if (next <= 0) cart.delete(id); else cart.set(id,next);
+      if (next <= 0) cart.delete(id); else if (next <= 99) cart.set(id,next);
       renderCart();
     } else if (removeButton) { cart.delete(removeButton.dataset.remove); renderCart(); }
   });
