@@ -1,0 +1,26 @@
+name: Validate Flowerine
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  static-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check JavaScript syntax
+        run: |
+          node --check script.js
+          node --check admin.js
+          node --check supabase-config.js
+          node --check scripts/preflight.mjs
+      - name: Run repository preflight
+        run: node scripts/preflight.mjs
