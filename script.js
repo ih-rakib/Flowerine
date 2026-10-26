@@ -176,9 +176,12 @@
     if (error) { console.warn("Flowerine product sync unavailable:",error.message); return; }
     if (!data?.length) return;
     data.forEach(p => { products[p.id] = {name:p.name,price:Number(p.price),image:p.image_url || "images/flower3.png",description:p.description || "",stock:p.stock}; });
-    grid.innerHTML = data.map(p => {
-      const esc = value => String(value ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
-      return '<article class="product-card" data-id="' + esc(p.id) + '" data-category="' + esc((p.categories || []).join(" ")) + '" data-name="' + esc(p.name) + '" data-price="' + Number(p.price) + '"><div class="product-image"><button class="wishlist" aria-label="Save ' + esc(p.name) + '" aria-pressed="false">♡</button><img src="' + esc(p.image_url || "images/flower3.png") + '" alt="' + esc(p.name) + '" loading="lazy"><button class="quick-add" data-add="' + esc(p.id) + '">Add to bag <span>＋</span></button></div><div class="product-info"><div><h3>' + esc(p.name) + '</h3><p>' + esc(p.description || "") + '</p></div><strong>
+    const esc = value => String(value ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+    grid.innerHTML = data.map(p => '<article class="product-card" data-id="' + esc(p.id) + '" data-category="' + esc((p.categories || []).join(" ")) + '" data-name="' + esc(p.name) + '" data-price="' + Number(p.price) + '"><div class="product-image"><button class="wishlist" aria-label="Save ' + esc(p.name) + '" aria-pressed="false">♡</button><img src="' + esc(p.image_url || "images/flower3.png") + '" alt="' + esc(p.name) + '" loading="lazy"><button class="quick-add" data-add="' + esc(p.id) + '">Add to bag <span>＋</span></button></div><div class="product-info"><div><h3>' + esc(p.name) + '</h3><p>' + esc(p.description || "") + '</p></div><strong>$' + Number(p.price).toFixed(2) + '</strong></div></article>').join("");
+    bindProductActions();
+    applyFilters();
+  }
+  loadSupabaseProducts();
   const checkoutModal = $("#checkoutModal");
   function openCheckout() {
     if (!cart.size) { showToast("Your bag is empty. Add a bouquet you love first."); return; }
