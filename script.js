@@ -13,6 +13,11 @@
   const $ = (selector, root=document) => root.querySelector(selector);
   const $$ = (selector, root=document) => [...root.querySelectorAll(selector)];
   const cart = new Map();
+  let customSequence = 0;
+  const supabaseConfig = window.FLOWERINE_SUPABASE || {};
+  const supabaseClient = window.supabase?.createClient && supabaseConfig.url && supabaseConfig.anonKey &&
+    !supabaseConfig.url.includes("YOUR_PROJECT_REF") && !supabaseConfig.anonKey.includes("YOUR_SUPABASE")
+    ? window.supabase.createClient(supabaseConfig.url, supabaseConfig.anonKey) : null;
   // Restore the customer's bag between visits on the same browser.
   try {
     const savedCart = JSON.parse(localStorage.getItem("flowerine-cart") || "[]");
@@ -70,14 +75,14 @@
   $$("#mainNav a").forEach(link => link.addEventListener("click", () => {
     $("#mainNav").classList.remove("open"); $("#menuToggle").setAttribute("aria-expanded","false"); $("#menuToggle").textContent = "☰";
   }));
-  $$(".quick-add").forEach(button => button.addEventListener("click", () => {
+  function bindProductActions() {\n  $(".quick-add", grid).forEach(button => button.addEventListener("click", () => {
     const id = button.dataset.add;
     const currentQty = cart.get(id) || 0;
     if (currentQty >= 99) { showToast("Maximum quantity for one item is 99."); return; }
     cart.set(id, currentQty + 1);
     renderCart(); showToast(products[id].name + " added to your bag");
   }));
-  $$(".wishlist").forEach(button => button.addEventListener("click", () => {
+  $(".wishlist", grid).forEach(button => button.addEventListener("click", () => {
     const saved = button.getAttribute("aria-pressed") !== "true";
     button.setAttribute("aria-pressed", String(saved)); button.textContent = saved ? "♥" : "♡";
     showToast(saved ? "Saved to your favourites" : "Removed from your favourites");
@@ -120,6 +125,154 @@
   backdrop.addEventListener("click", closeCart);
   document.addEventListener("keydown", event => { if (event.key === "Escape" && !drawer.hidden) closeCart(); });
   const formSubmitEndpoint = "https://formsubmit.co/ajax/hasanrakib3590@gmail.com";
+  const builderSize = $("#builderSize");
+  const builderWrap = $("#builderWrap");
+  function updateBuilderPrice() {
+    const size = Number(builderSize.selectedOptions[0].dataset.price || 0);
+    const wrap = Number(builderWrap.selectedOptions[0].dataset.price || 0);
+    $("#builderPrice").textContent = "$" + (size + wrap).toFixed(2);
+  }
+  builderSize.addEventListener("change", updateBuilderPrice);
+  builderWrap.addEventListener("change", updateBuilderPrice);
+  $("#bouquetBuilder").addEventListener("submit", event => {
+    event.preventDefault();
+    const size = builderSize.value, wrapping = builderWrap.value;
+    const details = {style:$("#builderStyle").value,size,wrapping,colour:$("#builderColour").value,cardMessage:$("#builderMessage").value.trim()};
+    const price = Number(builderSize.selectedOptions[0].dataset.price) + Number(builderWrap.selectedOptions[0].dataset.price);
+    const id = "custom-" + (++customSequence);
+    products[id] = {name:"Custom Bouquet — " + details.style,price,image:"images/flower3.png",details};
+    cart.set(id,1); renderCart();
+    $("#builderFeedback").textContent = "Your custom bouquet has been added to your bag.";
+    showToast("Custom bouquet added to your bag");
+  });
+  updateBuilderPrice();
+  const deliveryDateInput = $("#deliveryDate");
+  const today = new Date();
+  deliveryDateInput.min = new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().slice(0,10);
+  $("#whatsappOrderButton").addEventListener("click", () => {
+    if (!cart.size) { $("#orderMessage").textContent = "Your bag is empty."; return; }
+    const form = $("#orderForm");
+    if (!form.reportValidity()) return;
+    const number = String(window.FLOWERINE_WHATSAPP_NUMBER || "").replace(/\D/g,"");
+    if (!/^\d{8,15}$/.test(number)) {
+      $("#orderMessage").textContent = "WhatsApp is not configured yet. The shop owner must add the business number in supabase-config.js.";
+      return;
+    }
+    const lines = [...cart.entries()].map(([id,qty]) => {
+      const p = products[id];
+      return qty + " × " + p.name + " — $" + (p.price * qty).toFixed(2) + (p.details ? " (" + Object.values(p.details).filter(Boolean).join(", ") + ")" : "");
+    });
+    const msg = ["Hello Flowerine, I'd like to request this order:",...lines,"Estimated subtotal: " + $("#cartSubtotal").textContent,
+      "Name: " + $("#orderName").value,"Email: " + $("#orderEmail").value,"Phone: " + $("#orderPhone").value,
+      "Delivery address: " + $("#orderAddress").value,"Delivery date: " + deliveryDateInput.value,"Occasion: " + $("#orderOccasion").value,
+      "Notes: " + ($("#orderNotes").value || "None"),"Please confirm availability, delivery charges and payment details."].join("\\n");
+    window.open("https://wa.me/" + number + "?text=" + encodeURIComponent(msg), "_blank", "noopener,noreferrer");
+  });
+  async function loadSupabaseProducts() {
+    if (!supabaseClient) return;
+    const {data,error} = await supabaseClient.from("products").select("id,name,description,price,image_url,categories,stock").eq("active",true).order("name");
+    if (error) { console.warn("Flowerine product sync unavailable:",error.message); return; }
+    if (!data?.length) return;
+    data.forEach(p => { products[p.id] = {name:p.name,price:Number(p.price),image:p.image_url || "images/flower3.png",description:p.description || "",stock:p.stock}; });
+    grid.innerHTML = data.map(p => {
+      const esc = value => String(value ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+      return '<article class="product-card" data-id="' + esc(p.id) + '" data-category="' + esc((p.categories || []).join(" ")) + '" data-name="' + esc(p.name) + '" data-price="' + Number(p.price) + '"><div class="product-image"><button class="wishlist" aria-label="Save ' + esc(p.name) + '" aria-pressed="false">♡</button><img src="' + esc(p.image_url || "images/flower3.png") + '" alt="' + esc(p.name) + '" loading="lazy"><button class="quick-add" data-add="' + esc(p.id) + '">Add to bag <span>＋</span></button></div><div class="product-info"><div><h3>' + esc(p.name) + '</h3><p>' + esc(p.description || "") + '</p></div><strong>
+  const checkoutModal = $("#checkoutModal");
+  function openCheckout() {
+    if (!cart.size) { showToast("Your bag is empty. Add a bouquet you love first."); return; }
+    $("#orderSummaryText").textContent = [...cart.entries()].map(([id,qty]) => qty + " × " + products[id].name).join("; ");
+    $("#orderSummaryTotal").textContent = $("#cartSubtotal").textContent;
+    $("#orderMessage").textContent = "";
+    $("#submitOrderButton").disabled = false;
+    $("#submitOrderButton").innerHTML = 'Send order request <span>↗</span>';
+    checkoutModal.hidden = false;
+    document.body.classList.add("drawer-open");
+    $("#orderName").focus();
+  }
+  function closeCheckout() {
+    checkoutModal.hidden = true;
+    document.body.classList.remove("drawer-open");
+    $("#checkoutButton").focus();
+  }
+  $("#checkoutButton").addEventListener("click", openCheckout);
+  $("#checkoutClose").addEventListener("click", closeCheckout);
+  checkoutModal.addEventListener("click", event => { if (event.target === checkoutModal) closeCheckout(); });
+  document.addEventListener("keydown", event => { if (event.key === "Escape" && !checkoutModal.hidden) closeCheckout(); });
+
+  async function sendToInbox(payload, subject) {
+    payload._subject = subject;
+    payload._template = "table";
+    payload._captcha = "true";
+    const response = await fetch(formSubmitEndpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    const data = await response.json();
+    if (!response.ok || !(data.success === true || data.success === "true")) {
+      throw new Error(data.message || "The email service did not accept the submission.");
+    }
+    return data;
+  }
+
+  $("#orderForm").addEventListener("submit", async event => {
+    event.preventDefault();
+    if (!cart.size) { $("#orderMessage").textContent = "Your bag is empty. Add a product and try again."; return; }
+    const form = event.currentTarget;
+    const button = $("#submitOrderButton");
+    const message = $("#orderMessage");
+    const payload = Object.fromEntries(new FormData(form).entries());
+    payload.order_items = [...cart.entries()].map(([id,qty]) => {
+      const p = products[id];
+      return qty + " × " + p.name + " — $" + (p.price * qty).toFixed(2) + (p.details ? " | " + JSON.stringify(p.details) : "");
+    }).join("\n");
+    payload.estimated_subtotal = $("#cartSubtotal").textContent;
+    payload.order_status = "Order request only — not yet confirmed or paid";\n    payload.delivery_date = $("#deliveryDate").value;\n    payload.occasion = $("#orderOccasion").value;
+    payload._replyto = payload.email;
+    button.disabled = true;
+    button.textContent = "Sending request…";
+    message.textContent = "Submitting your order request…";
+    try {
+      await sendToInbox(payload, "Flowerine — new order request");
+      message.textContent = "Your request was sent. The shop will contact you to confirm details.";
+      showToast("Order request sent successfully");
+      cart.clear();
+      renderCart();
+      form.reset();
+      button.textContent = "Request sent ✓";
+    } catch (error) {
+      message.textContent = "Couldn't send the request. Please try again. " + error.message;
+      button.disabled = false;
+      button.innerHTML = 'Send order request <span>↗</span>';
+    }
+  });
+
+  $("#newsletterForm").addEventListener("submit", async event => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const email = $("#newsletterEmail").value.trim();
+    const message = $("#newsletterMessage");
+    const button = form.querySelector('button[type="submit"]');
+    button.disabled = true;
+    message.textContent = "Submitting your subscription…";
+    try {
+      await sendToInbox({ email, source: "Flowerine newsletter signup", _replyto: email }, "Flowerine — newsletter subscription");
+      message.textContent = "Thank you! Your subscription request has been sent.";
+      form.reset();
+      showToast("Newsletter request sent");
+    } catch (error) {
+      message.textContent = "Couldn't submit your email. Please try again. " + error.message;
+    } finally {
+      button.disabled = false;
+    }
+  });
+  $("#year").textContent = new Date().getFullYear();
+  renderCart();
+})(); + Number(p.price).toFixed(2) + '</strong></div></article>';
+    }).join("");
+    bindProductActions(); applyFilters();
+  }
+  loadSupabaseProducts();
   const checkoutModal = $("#checkoutModal");
   function openCheckout() {
     if (!cart.size) { showToast("Your bag is empty. Add a bouquet you love first."); return; }
