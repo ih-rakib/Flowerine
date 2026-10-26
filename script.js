@@ -11,7 +11,7 @@
     celebrate:{name:"Little Celebration",price:4500,image:"images/pngwing8.png"}
   };
   const $ = (selector, root=document) => root.querySelector(selector);
-  const formatMoney = value => "৳" + Math.round(Number(value) || 0).toLocaleString("en-BD");
+  const formatMoney = value => "৳" + Number(value || 0).toLocaleString("en-BD",{maximumFractionDigits:2,minimumFractionDigits:0});
   const $$ = (selector, root=document) => [...root.querySelectorAll(selector)];
   const cart = new Map();
   let customSequence = 0;
