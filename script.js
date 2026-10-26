@@ -180,7 +180,8 @@
     if (error) { console.error("Flowerine catalogue could not be loaded:",error.message); grid.innerHTML = ""; $("#emptyState").textContent = "Our flower catalogue is temporarily unavailable. Please try again soon."; cart.clear(); applyFilters(); renderCart(); return; }
     if (!data?.length) { grid.innerHTML = ""; $("#emptyState").textContent = "Our flower catalogue is being prepared. Please check back soon."; cart.clear(); applyFilters(); renderCart(); return; }
     data.forEach(p => { products[p.id] = {name:p.name,price:Number(p.price),image:p.image_url || "images/flower3.png",description:p.description || "",stock:p.stock}; });
-    pendingSavedCart.forEach(([id,qty]) => { if (products[id] && !id.startsWith("custom-")) cart.set(id, Math.min(99, qty)); });
+    const liveProductIds = new Set(data.map(p => p.id));
+    pendingSavedCart.forEach(([id,qty]) => { if (liveProductIds.has(id)) cart.set(id, Math.min(99, qty)); });
     const esc = value => String(value ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
     grid.innerHTML = data.map(p => '<article class="product-card" data-id="' + esc(p.id) + '" data-category="' + esc((p.categories || []).join(" ")) + '" data-name="' + esc(p.name) + '" data-price="' + Number(p.price) + '"><div class="product-image"><button class="wishlist" aria-label="Save ' + esc(p.name) + '" aria-pressed="false">♡</button><img src="' + esc(p.image_url || "images/flower3.png") + '" alt="' + esc(p.name) + '" loading="lazy"><button class="quick-add" data-add="' + esc(p.id) + '">Add to bag <span>＋</span></button></div><div class="product-info"><div><h3>' + esc(p.name) + '</h3><p>' + esc(p.description || "") + '</p></div><strong>$' + Number(p.price).toFixed(2) + '</strong></div></article>').join("");
     bindProductActions();
