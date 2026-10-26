@@ -232,7 +232,8 @@
       return qty + " × " + p.name + " — $" + (p.price * qty).toFixed(2) + (p.details ? " | " + JSON.stringify(p.details) : "");
     }).join("\n");
     payload.estimated_subtotal = $("#cartSubtotal").textContent;
-    payload.order_status = "Order request only — not yet confirmed or paid";\n    payload.delivery_date = $("#deliveryDate").value;\n    payload.occasion = $("#orderOccasion").value;
+    payload.order_status = "Order request only — not yet confirmed or paid";
+    payload.delivery_date = $("#deliveryDate").value;\n    payload.occasion = $("#orderOccasion").value;
     payload._replyto = payload.email;
     button.disabled = true;
     button.textContent = "Sending request…";
@@ -254,7 +255,6 @@
         await sendToInbox(payload, "Flowerine — new order request");
         message.textContent = "Your request was emailed. The shop will contact you to confirm details.";
       }
-      message.textContent = "Your request was sent. The shop will contact you to confirm details.";
       showToast("Order request sent successfully");
       cart.clear();
       renderCart();
@@ -288,11 +288,7 @@
   });
   $("#year").textContent = new Date().getFullYear();
   renderCart();
-})(); + Number(p.price).toFixed(2) + '</strong></div></article>';
-    }).join("");
-    bindProductActions(); applyFilters();
-  }
-  loadSupabaseProducts();
+})();
   const checkoutModal = $("#checkoutModal");
   function openCheckout() {
     if (!cart.size) { showToast("Your bag is empty. Add a bouquet you love first."); return; }
