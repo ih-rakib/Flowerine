@@ -1,16 +1,17 @@
 (() => {
   "use strict";
   const products = {
-    blush:{name:"Blush Hour Bouquet",price:32,image:"images/flower1.png"},
-    cherry:{name:"Cherry Blossom Daydream",price:28,image:"images/flower2.png"},
-    garden:{name:"The Garden Party",price:36,image:"images/flower3.png"},
-    peony:{name:"Peony Promise",price:42,image:"images/pngwing1.png"},
-    rosy:{name:"Rosy Ever After",price:38,image:"images/pngwing2.png"},
-    spring:{name:"A Spring Whisper",price:25,image:"images/pngwing3.png"},
-    signature:{name:"The Signature Stem",price:30,image:"images/pngwing4.png"},
-    celebrate:{name:"Little Celebration",price:45,image:"images/pngwing8.png"}
+    blush:{name:"Blush Hour Bouquet",price:3200,image:"images/flower1.png"},
+    cherry:{name:"Cherry Blossom Daydream",price:2800,image:"images/flower2.png"},
+    garden:{name:"The Garden Party",price:3600,image:"images/flower3.png"},
+    peony:{name:"Peony Promise",price:4200,image:"images/pngwing1.png"},
+    rosy:{name:"Rosy Ever After",price:3800,image:"images/pngwing2.png"},
+    spring:{name:"A Spring Whisper",price:2500,image:"images/pngwing3.png"},
+    signature:{name:"The Signature Stem",price:3000,image:"images/pngwing4.png"},
+    celebrate:{name:"Little Celebration",price:4500,image:"images/pngwing8.png"}
   };
   const $ = (selector, root=document) => root.querySelector(selector);
+  const formatMoney = value => "৳" + Math.round(Number(value) || 0).toLocaleString("en-BD");
   const $$ = (selector, root=document) => [...root.querySelectorAll(selector)];
   const cart = new Map();
   let customSequence = 0;
@@ -102,11 +103,11 @@
     else {
       items.innerHTML = [...cart.entries()].map(([id,qty]) => {
         const p = products[id];
-        return '<article class="cart-item"><img src="' + p.image + '" alt=""><div><h3>' + p.name + '</h3><p class="item-price">$' + p.price.toFixed(2) + '</p><div class="quantity-controls"><button type="button" data-qty="-1" data-id="' + id + '" aria-label="Decrease quantity">−</button><span>' + qty + '</span><button type="button" data-qty="1" data-id="' + id + '" aria-label="Increase quantity">+</button></div></div><button class="remove-item" type="button" data-remove="' + id + '" aria-label="Remove ' + p.name + '">×</button></article>';
+        return '<article class="cart-item"><img src="' + p.image + '" alt=""><div><h3>' + p.name + '</h3><p class="item-price">' + formatMoney(p.price) + '</p><div class="quantity-controls"><button type="button" data-qty="-1" data-id="' + id + '" aria-label="Decrease quantity">−</button><span>' + qty + '</span><button type="button" data-qty="1" data-id="' + id + '" aria-label="Increase quantity">+</button></div></div><button class="remove-item" type="button" data-remove="' + id + '" aria-label="Remove ' + p.name + '">×</button></article>';
       }).join("");
     }
     const subtotal = [...cart.entries()].reduce((sum,[id,qty]) => sum + products[id].price*qty,0);
-    $("#cartSubtotal").textContent = "$" + subtotal.toFixed(2);
+    $("#cartSubtotal").textContent = formatMoney(subtotal);
   }
   $("#cartItems").addEventListener("click", event => {
     const qtyButton = event.target.closest("[data-qty]");
@@ -136,7 +137,7 @@
   function updateBuilderPrice() {
     const size = Number(builderSize.selectedOptions[0].dataset.price || 0);
     const wrap = Number(builderWrap.selectedOptions[0].dataset.price || 0);
-    $("#builderPrice").textContent = "$" + (size + wrap).toFixed(2);
+    $("#builderPrice").textContent = formatMoney(size + wrap);
   }
   builderSize.addEventListener("change", updateBuilderPrice);
   builderWrap.addEventListener("change", updateBuilderPrice);
@@ -166,7 +167,7 @@
     }
     const lines = [...cart.entries()].map(([id,qty]) => {
       const p = products[id];
-      return qty + " × " + p.name + " — $" + (p.price * qty).toFixed(2) + (p.details ? " (" + Object.values(p.details).filter(Boolean).join(", ") + ")" : "");
+      return qty + " × " + p.name + " — " + formatMoney(p.price * qty) + (p.details ? " (" + Object.values(p.details).filter(Boolean).join(", ") + ")" : "");
     });
     const msg = ["Hello Flowerine, I'd like to request this order:",...lines,"Estimated subtotal: " + $("#cartSubtotal").textContent,
       "Name: " + $("#orderName").value,"Email: " + $("#orderEmail").value,"Phone: " + $("#orderPhone").value,
