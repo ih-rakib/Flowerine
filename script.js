@@ -18,14 +18,17 @@
   const supabaseClient = window.supabase?.createClient && supabaseConfig.url && supabaseConfig.anonKey &&
     !supabaseConfig.url.includes("YOUR_PROJECT_REF") && !supabaseConfig.anonKey.includes("YOUR_SUPABASE")
     ? window.supabase.createClient(supabaseConfig.url, supabaseConfig.anonKey) : null;
-  // Restore the customer's bag between visits on the same browser.
+  // Preserve saved cart entries until the configured live catalogue has loaded.
+  const pendingSavedCart = [];
   try {
     const savedCart = JSON.parse(localStorage.getItem("flowerine-cart") || "[]");
     if (Array.isArray(savedCart)) {
       savedCart.forEach(entry => {
         if (!Array.isArray(entry) || entry.length !== 2) return;
         const [id, qty] = entry;
-        if (products[id] && Number.isInteger(qty) && qty > 0 && qty <= 99) cart.set(id, qty);
+        if (!Number.isInteger(qty) || qty < 1 || qty > 99) return;
+        if (supabaseClient) pendingSavedCart.push([id, qty]);
+        else if (products[id]) cart.set(id, qty);
       });
     }
   } catch (_) { /* Storage may be unavailable; the in-memory bag still works. */ }
@@ -174,13 +177,15 @@
   async function loadSupabaseProducts() {
     if (!supabaseClient) return;
     const {data,error} = await supabaseClient.from("products").select("id,name,description,price,image_url,categories,stock").eq("active",true).order("name");
-    if (error) { console.warn("Flowerine product sync unavailable:",error.message); return; }
-    if (!data?.length) return;
+    if (error) { console.error("Flowerine catalogue could not be loaded:",error.message); grid.innerHTML = ""; $("#emptyState").textContent = "Our flower catalogue is temporarily unavailable. Please try again soon."; cart.clear(); applyFilters(); renderCart(); return; }
+    if (!data?.length) { grid.innerHTML = ""; $("#emptyState").textContent = "Our flower catalogue is being prepared. Please check back soon."; cart.clear(); applyFilters(); renderCart(); return; }
     data.forEach(p => { products[p.id] = {name:p.name,price:Number(p.price),image:p.image_url || "images/flower3.png",description:p.description || "",stock:p.stock}; });
+    pendingSavedCart.forEach(([id,qty]) => { if (products[id] && !id.startsWith("custom-")) cart.set(id, Math.min(99, qty)); });
     const esc = value => String(value ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
     grid.innerHTML = data.map(p => '<article class="product-card" data-id="' + esc(p.id) + '" data-category="' + esc((p.categories || []).join(" ")) + '" data-name="' + esc(p.name) + '" data-price="' + Number(p.price) + '"><div class="product-image"><button class="wishlist" aria-label="Save ' + esc(p.name) + '" aria-pressed="false">♡</button><img src="' + esc(p.image_url || "images/flower3.png") + '" alt="' + esc(p.name) + '" loading="lazy"><button class="quick-add" data-add="' + esc(p.id) + '">Add to bag <span>＋</span></button></div><div class="product-info"><div><h3>' + esc(p.name) + '</h3><p>' + esc(p.description || "") + '</p></div><strong>$' + Number(p.price).toFixed(2) + '</strong></div></article>').join("");
     bindProductActions();
     applyFilters();
+    renderCart();
   }
   loadSupabaseProducts();
   const checkoutModal = $("#checkoutModal");
