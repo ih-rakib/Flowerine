@@ -1,181 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <title>Flowerine</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fff7f8">
+  <meta name="description" content="Discover beautiful flowers and seasonal offers at Flowerine.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <title>Flowerine — Beautiful Flowers for Every Moment</title>
 </head>
-
 <body>
-    <!-- banner section -->
-    <div class="banner">
-        <div class="container">
-            <h1 class="banneTitle">Let's make beautiful flowers a part of your life.</h1>
-            <h4 class="bannerDesc">It is a long established fact that a reader will be distracted by the readable
-                content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a
-                more-or-less normal distribution of letters.</h4>
-            <button class="bannerBtn">Shop Now</button>
-        </div>
+  <header class="banner" id="home">
+    <div class="container">
+      <p class="eyebrow">Fresh blooms, thoughtful moments</p>
+      <h1 class="banneTitle">Let's make beautiful flowers a part of your life.</h1>
+      <p class="bannerDesc">Bring a little more colour, joy, and natural beauty into every day with flowers picked for life's special moments.</p>
+      <a class="bannerBtn" href="#flowers">Shop Now</a>
     </div>
+  </header>
 
-    <!-- available flowers -->
-    <div class="available">
-        <div class="avInfo">
-            <h3 class="avTitle">Today’s Availabe Flowers</h3>
-            <span class="avDesc">It is a long established fact that a reader will be distracted by the readable <br>
-                content
-                of a
-                page when looking at its layout.</span>
+  <main>
+    <section class="available section" id="flowers" aria-labelledby="available-title">
+      <div class="avInfo section-heading">
+        <h2 class="avTitle" id="available-title">Today's Available Flowers</h2>
+        <p class="avDesc">Find a favourite bloom for someone special—or just because.</p>
+      </div>
+      <div class="card-container">
+        <article class="card">
+          <img src="images/flower1.png" alt="Pink flowering branch" class="flower" loading="lazy">
+          <div class="flowerDesc"><h3 class="flowerName">Pink China Cherry</h3><p class="flowerPrice">$17</p></div>
+        </article>
+        <article class="card">
+          <img src="images/flower2.png" alt="Soft pink flower arrangement" class="flower" loading="lazy">
+          <div class="flowerDesc"><h3 class="flowerName">Blush Blossom</h3><p class="flowerPrice">$17</p></div>
+        </article>
+        <article class="card">
+          <img src="images/flower3.png" alt="Fresh seasonal flowers" class="flower" loading="lazy">
+          <div class="flowerDesc"><h3 class="flowerName">Garden Delight</h3><p class="flowerPrice">$17</p></div>
+        </article>
+        <article class="card">
+          <img src="images/pngwing1.png" alt="Decorative pink flower" class="flower" loading="lazy">
+          <div class="flowerDesc"><h3 class="flowerName">Sweet Peony</h3><p class="flowerPrice">$17</p></div>
+        </article>
+        <article class="card">
+          <img src="images/pngwing2.png" alt="Elegant flower bloom" class="flower" loading="lazy">
+          <div class="flowerDesc"><h3 class="flowerName">Rosy Charm</h3><p class="flowerPrice">$17</p></div>
+        </article>
+        <article class="card">
+          <img src="images/pngwing3.png" alt="Colourful seasonal bloom" class="flower" loading="lazy">
+          <div class="flowerDesc"><h3 class="flowerName">Spring Whisper</h3><p class="flowerPrice">$17</p></div>
+        </article>
+      </div>
+      <a class="see-more-button" href="#featured">Explore Featured Flowers</a>
+    </section>
+
+    <section class="feature section" id="featured" aria-labelledby="feature-title">
+      <div class="featureInfo section-heading">
+        <h2 class="featureTitle" id="feature-title">Our Featured Flowers</h2>
+        <p class="featureDesc">A hand-picked selection to make your moments feel a little more memorable.</p>
+      </div>
+      <div class="featureContainer">
+        <article class="featureCard">
+          <img src="images/pngwing4.png" class="featureImg" alt="Featured pink flower" loading="lazy">
+          <div class="featuredFLower"><h3 class="featureName">Pink China Cherry</h3><p class="featurePrice">$17</p></div>
+        </article>
+        <article class="featureCard">
+          <img src="images/pngwing4.png" class="featureImg" alt="Featured flower arrangement" loading="lazy">
+          <div class="featuredFLower"><h3 class="featureName">Blush Collection</h3><p class="featurePrice">$19</p></div>
+        </article>
+        <article class="featureCard">
+          <img src="images/pngwing4.png" class="featureImg" alt="Featured seasonal bloom" loading="lazy">
+          <div class="featuredFLower"><h3 class="featureName">Petal Promise</h3><p class="featurePrice">$21</p></div>
+        </article>
+        <article class="featureCard">
+          <img src="images/pngwing4.png" class="featureImg" alt="Featured floral gift" loading="lazy">
+          <div class="featuredFLower"><h3 class="featureName">Garden Romance</h3><p class="featurePrice">$18</p></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="dealContainer" id="offer" aria-labelledby="deal-title">
+      <div class="dealLeft">
+        <p class="hurry">A little something for you</p>
+        <h2 class="dealLeftTitle" id="deal-title">Hot Deal! Sale Up To 25% <span class="off">Off</span></h2>
+        <p class="dealDesc">Celebrate the season with beautiful blooms at a special price. Find your next favourite arrangement today.</p>
+        <div class="dealBtn" aria-label="Special sale highlights">
+          <div class="dealBtnText"><span class="dealBtnTextTitle">25%</span><span class="dealBtnTextSm">off</span></div>
+          <div class="dealBtnText"><span class="dealBtnTextTitle">Fresh</span><span class="dealBtnTextSm">blooms</span></div>
+          <div class="dealBtnText"><span class="dealBtnTextTitle">All</span><span class="dealBtnTextSm">season</span></div>
         </div>
-        <div class="card-container">
-            <div class="card">
-                <img src="images/flower1.png" alt="Flower 1" class="flower">
-                <div class="flowerDesc">
-                    <p class="flowerName">Pink China Cherry</p>
-                    <p class="flowerPrice">$17</p>
-                </div>
-            </div>
-            <div class="card">
-                <img src="images/flower2.png" alt="Flower 1" class="flower">
-                <div class="flowerDesc">
-                    <p class="flowerName">Pink China Cherry</p>
-                    <p class="flowerPrice">$17</p>
-                </div>
-            </div>
-            <div class="card">
-                <img src="images/flower3.png" alt="Flower 1" class="flower">
-                <div class="flowerDesc">
-                    <p class="flowerName">Pink China Cherry</p>
-                    <p class="flowerPrice">$17</p>
-                </div>
-            </div>
-            <div class="card">
-                <img src="images/pngwing1.png" alt="Flower 1" class="flower">
-                <div class="flowerDesc">
-                    <p class="flowerName">Pink China Cherry</p>
-                    <p class="flowerPrice">$17</p>
-                </div>
-            </div>
-            <div class="card">
-                <img src="images/pngwing2.png" alt="Flower 1" class="flower">
-                <div class="flowerDesc">
-                    <p class="flowerName">Pink China Cherry</p>
-                    <p class="flowerPrice">$17</p>
-                </div>
-            </div>
-            <div class="card">
-                <img src="images/pngwing3.png" alt="Flower 1" class="flower">
-                <div class="flowerDesc">
-                    <p class="flowerName">Pink China Cherry</p>
-                    <p class="flowerPrice">$17</p>
-                </div>
-            </div>
-        </div>
-        <button class="see-more-button">See More</button>
+        <a class="dealShop" href="#flowers">Shop the Sale</a>
+      </div>
+      <div class="dealRight">
+        <img src="images/pngwing8.png" class="dealImg" alt="Flower arrangement featured in the seasonal sale" loading="lazy">
+      </div>
+    </section>
+  </main>
+
+  <footer class="footerContainer" id="contact">
+    <a class="footerTitle" href="#home">Flowerine</a>
+    <p class="footerDesc">Thoughtful flowers for everyday moments and the occasions that matter.</p>
+    <div class="footerIcons" aria-label="Social media">
+      <a href="https://www.facebook.com/" aria-label="Facebook"><img src="images/facebook 1.png" class="footerIcon" alt="" loading="lazy"></a>
+      <a href="https://twitter.com/" aria-label="Twitter"><img src="images/twitter.png" class="footerIcon" alt="" loading="lazy"></a>
+      <a href="https://www.instagram.com/" aria-label="Instagram"><img src="images/instagram.png" class="footerIcon" alt="" loading="lazy"></a>
+      <a href="https://www.youtube.com/" aria-label="YouTube"><img src="images/youtube.png" class="footerIcon" alt="" loading="lazy"></a>
     </div>
-
-    <!-- features -->
-    <div class="feature">
-        <div class="featureInfo">
-            <h3 class="featureTitle">Our Featured Flower</h3>
-            <span class="featureDesc">It is a long established fact that a reader will be distracted by the readable
-                <br>
-                content
-                of a
-                page when looking at its layout.</span>
-        </div>
-
-        <div class="featureContainer">
-            <div class="featureCard">
-                <img src="images/pngwing4.png" class="featureImg" alt="">
-                <div class="featuredFLower">
-                    <p class="featureName">Pink China Cherry</p>
-                    <p class="featurePrice">$17</p>
-                </div>
-            </div>
-            <div class="featureCard">
-                <img src="images/pngwing4.png" class="featureImg" alt="">
-                <div class="featuredFLower">
-                    <p class="featureName">Pink China Cherry</p>
-                    <p class="featurePrice">$17</p>
-                </div>
-            </div>
-            <div class="featureCard">
-                <img src="images/pngwing4.png" class="featureImg" alt="">
-                <div class="featuredFLower">
-                    <p class="featureName">Pink China Cherry</p>
-                    <p class="featurePrice">$17</p>
-                </div>
-            </div>
-            <div class="featureCard">
-                <img src="images/pngwing4.png" class="featureImg" alt="">
-                <div class="featuredFLower">
-                    <p class="featureName">Pink China Cherry</p>
-                    <p class="featurePrice">$17</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- hot deal -->
-
-    <div class="dealContainer">
-        <div class="dealLeft">
-            <p class="hurry">Hurry Up</p>
-            <h3 class="dealLeftTitle">Hot Deal ! Sale Up To 25% <span class="off">Off</span></h3>
-            <span class="dealDesc">It is a long established fact that a reader will be distracted by the readable
-                content of a page when looking at its layout.</span>
-            <div class="dealBtn">
-                <div class="dealBtnText">
-                    <h3 class="dealBtnTextTitle">35</h3>
-                    <span class="dealBtnTextSm">days</span>
-                </div>
-                <div class="dealBtnText">
-                    <h3 class="dealBtnTextTitle">7</h3>
-                    <span class="dealBtnTextSm">hour</span>
-                </div>
-                <div class="dealBtnText">
-                    <h3 class="dealBtnTextTitle">34</h3>
-                    <span class="dealBtnTextSm">Min</span>
-                </div>
-                <div class="dealBtnText">
-                    <h3 class="dealBtnTextTitle">11</h3>
-                    <span class="dealBtnTextSm">Sec</span>
-                </div>
-            </div>
-            <button class="dealShop">Shop Now!</button>
-        </div>
-        <div class="dealRight">
-            <img src="images/pngwing8.png" class="dealImg" alt="">
-        </div>
-    </div>
-
-    <!-- footer -->
-
-    <div class="footerContainer">
-        <h2 class="footerTitle">FlowerShop</h2>
-        <span class="footerDesc">It is a long established fact that a reader will be distracted by the readable <br>
-            content of a page when looking at its layout.</span>
-        <div class="footerIcons">
-            <img src="images/facebook 1.png" class="footerIcon" alt="">
-            <img src="images/twitter.png" class="footerIcon" alt="">
-            <img src="images/instagram.png" class="footerIcon" alt="">
-            <img src="images/youtube.png" class="footerIcon" alt="">
-            <img src="images/apple 1.png" class="footerIcon" alt="">
-        </div>
-        <div class="footerMenu">
-            <p>Send Flowers</p>
-            <p>What We Do</p>
-            <p>Gallery</p>
-            <p>Contacts</p>
-        </div>
-    </div>
-    </div>
+    <nav class="footerMenu" aria-label="Footer navigation">
+      <a href="#flowers">Send Flowers</a>
+      <a href="#featured">Featured</a>
+      <a href="#offer">Offers</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <p class="copyright">© Flowerine. Made with care.</p>
+  </footer>
 </body>
-
 </html>
