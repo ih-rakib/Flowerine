@@ -14,6 +14,7 @@ for (const path of [
   "supabase-config.js", "SUPABASE_SETUP.md",
   "supabase/migrations/202610260001_flowerine_store.sql",
   "supabase/migrations/202610260002_atomic_order_inventory.sql",
+  "supabase/migrations/202610260003_bdt_currency.sql",
   "supabase/functions/create-order/index.ts"
 ]) check(existsSync(resolve(root, path)), "required file exists: " + path);
 
@@ -26,14 +27,15 @@ for (const path of ["script.js","admin.js"]) {
   check(!code.includes("SUPABASE_SERVICE_ROLE_KEY") && !code.includes("service_role"), path + " contains no service-role credential reference");
 }
 const config = read("supabase-config.js");
-check(config.includes("YOUR_PROJECT_REF") || config.includes("YOUR_SUPABASE_ANON_KEY") || config.includes("YOUR_SUPABASE_PUBLISHABLE_KEY"),
-  "browser config uses explicit placeholders until owner configures Supabase");
+check(!config.includes("YOUR_PROJECT_REF") && !config.includes("YOUR_SUPABASE") && config.includes("FLOWERINE_WHATSAPP_NUMBER"), "browser config contains the configured public Supabase project and WhatsApp setting");
 
 const schema = read("supabase/migrations/202610260001_flowerine_store.sql");
 const inventory = read("supabase/migrations/202610260002_atomic_order_inventory.sql");
+const currency = read("supabase/migrations/202610260003_bdt_currency.sql");
 check(schema.includes("enable row level security") && schema.includes("Admins manage products"), "database schema enables RLS and admin-only product writes");
 check(inventory.includes("for update") && inventory.includes("stock = stock - qty"), "order migration locks and decrements product inventory");
 check(inventory.includes("revoke all on function") && inventory.includes("to service_role"), "order RPC is restricted to service_role");
+check(currency.includes("currency text not null default") && currency.includes("1800") && currency.includes("800"), "currency migration records BDT and validates custom bouquet prices");
 const edge = read("supabase/functions/create-order/index.ts");
 check(edge.includes('rpc("create_flowerine_order"') && edge.includes("SUPABASE_SERVICE_ROLE_KEY"), "Edge Function calls the server-side order RPC using an environment secret");
 const setup = read("SUPABASE_SETUP.md");
