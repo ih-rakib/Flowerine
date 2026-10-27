@@ -47,6 +47,9 @@ Flowerine/
 ├── index.html                         # Customer storefront
 ├── style.css                          # Storefront styling
 ├── script.js                          # Catalogue, cart and checkout
+├── product.html                       # Individual flower detail page
+├── product-page.css                   # Responsive product detail styling
+├── product-page.js                    # Product details and shared cart integration
 ├── admin.html                         # Admin dashboard page
 ├── admin.css                          # Admin dashboard styling
 ├── admin.js                           # Admin dashboard behavior
