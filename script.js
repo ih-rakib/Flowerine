@@ -90,6 +90,23 @@
   function bindProductActions() {
   $(".product-card", grid).forEach(card => {
     const id = card.dataset.id;
+    if (!card.dataset.detailCardBound) {
+      card.dataset.detailCardBound = "true";
+      card.style.cursor = "pointer";
+      card.addEventListener("click", event => {
+        // Keep the bag and favourite controls working without opening the detail page.
+        if (event.target.closest("button, a, input, select, textarea, label")) return;
+        window.location.href = "product.html?id=" + encodeURIComponent(id);
+      });
+      card.tabIndex = 0;
+      card.setAttribute("aria-label", "View details for " + (card.dataset.name || "this flower"));
+      card.addEventListener("keydown", event => {
+        if (event.target === card && (event.key === "Enter" || event.key === " ")) {
+          event.preventDefault();
+          window.location.href = "product.html?id=" + encodeURIComponent(id);
+        }
+      });
+    }
     const image = $(".product-image img", card);
     const title = $(".product-info h3", card);
     if (image && !image.dataset.detailBound) {
