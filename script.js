@@ -88,7 +88,31 @@
     $("#mainNav").classList.remove("open"); $("#menuToggle").setAttribute("aria-expanded","false"); $("#menuToggle").textContent = "☰";
   }));
   function bindProductActions() {
-  $$(".quick-add", grid).forEach(button => button.addEventListener("click", () => {
+  $(".product-card", grid).forEach(card => {
+    const id = card.dataset.id;
+    const image = $(".product-image img", card);
+    const title = $(".product-info h3", card);
+    if (image && !image.dataset.detailBound) {
+      image.dataset.detailBound = "true";
+      image.tabIndex = 0;
+      image.setAttribute("role", "link");
+      image.setAttribute("aria-label", "View details for " + (card.dataset.name || "this flower"));
+      image.style.cursor = "pointer";
+      const openDetails = () => { window.location.href = "product.html?id=" + encodeURIComponent(id); };
+      image.addEventListener("click", openDetails);
+      image.addEventListener("keydown", event => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); openDetails(); } });
+    }
+    if (title && !title.dataset.detailBound) {
+      title.dataset.detailBound = "true";
+      const link = document.createElement("a");
+      link.href = "product.html?id=" + encodeURIComponent(id);
+      link.className = "product-title-link";
+      link.textContent = title.textContent;
+      title.textContent = "";
+      title.append(link);
+    }
+  });
+  $(".quick-add", grid).forEach(button => button.addEventListener("click", () => {
     const id = button.dataset.add;
     const currentQty = cart.get(id) || 0;
     if (currentQty >= 99) { showToast("Maximum quantity for one item is 99."); return; }
