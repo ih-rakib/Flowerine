@@ -88,14 +88,14 @@
     $("#mainNav").classList.remove("open"); $("#menuToggle").setAttribute("aria-expanded","false"); $("#menuToggle").textContent = "☰";
   }));
   function bindProductActions() {
-  $(".quick-add", grid).forEach(button => button.addEventListener("click", () => {
+  $$(".quick-add", grid).forEach(button => button.addEventListener("click", () => {
     const id = button.dataset.add;
     const currentQty = cart.get(id) || 0;
     if (currentQty >= 99) { showToast("Maximum quantity for one item is 99."); return; }
     cart.set(id, currentQty + 1);
     renderCart(); showToast(products[id].name + " added to your bag");
   }));
-  $(".wishlist", grid).forEach(button => button.addEventListener("click", () => {
+  $$(".wishlist", grid).forEach(button => button.addEventListener("click", () => {
     const saved = button.getAttribute("aria-pressed") !== "true";
     button.setAttribute("aria-pressed", String(saved)); button.textContent = saved ? "♥" : "♡";
     showToast(saved ? "Saved to your favourites" : "Removed from your favourites");
