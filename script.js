@@ -58,7 +58,7 @@
   function applyFilters(){
     const query = ($("#productSearch")?.value || "").trim().toLowerCase();
     let visible = 0;
-    $$(".product-card", grid).forEach(card => {
+    $$$(".product-card", grid).forEach(card => {
       const matchesCategory = activeFilter === "all" || card.dataset.category.split(" ").includes(activeFilter);
       const matchesSearch = !query || (card.dataset.name + " " + card.textContent).toLowerCase().includes(query);
       card.hidden = !(matchesCategory && matchesSearch);
@@ -88,7 +88,7 @@
     $("#mainNav").classList.remove("open"); $("#menuToggle").setAttribute("aria-expanded","false"); $("#menuToggle").textContent = "☰";
   }));
   function bindProductActions() {
-  $(".product-card", grid).forEach(card => {
+  $$(".product-card", grid).forEach(card => {
     const id = card.dataset.id;
     if (!card.dataset.detailCardBound) {
       card.dataset.detailCardBound = "true";
@@ -129,7 +129,7 @@
       title.append(link);
     }
   });
-  $(".quick-add", grid).forEach(button => button.addEventListener("click", () => {
+  $$(".quick-add", grid).forEach(button => button.addEventListener("click", () => {
     const id = button.dataset.add;
     const currentQty = cart.get(id) || 0;
     if (currentQty >= 99) { showToast("Maximum quantity for one item is 99."); return; }
