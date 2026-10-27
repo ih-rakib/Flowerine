@@ -37,3 +37,7 @@
 .button-whatsapp:hover{background:#e0efe2}
 @media(max-width:760px){.builder-section{grid-template-columns:1fr;padding-top:65px;padding-bottom:65px;gap:25px}.builder-intro h2{font-size:42px}.heading-links{gap:14px}}
 @media(max-width:430px){.builder-card{grid-template-columns:1fr}.builder-wide,.builder-total,.builder-card>.button,.builder-feedback{grid-column:1}.builder-section{padding-left:var(--gutter);padding-right:var(--gutter)}}
+
+
+/* Product titles link to their individual detail pages. */
+.product-title-link{color:inherit;text-decoration:none}.product-title-link:hover{color:var(--pink-deep)}
