@@ -10,7 +10,7 @@ const check = (condition, message) => {
 };
 
 for (const path of [
-  "index.html", "style.css", "script.js", "admin.html", "admin.css", "admin.js",
+  "index.html", "style.css", "script.js", "product.html", "product-page.css", "product-page.js", "admin.html", "admin.css", "admin.js",
   "supabase-config.js", "SUPABASE_SETUP.md",
   "supabase/migrations/202610260001_flowerine_store.sql",
   "supabase/migrations/202610260002_atomic_order_inventory.sql",
@@ -22,7 +22,11 @@ const html = read("index.html");
 const ids = ["productGrid","bouquetBuilder","deliveryDate","orderOccasion","whatsappOrderButton","orderForm","checkoutModal","newsletterForm"];
 for (const id of ids) check(html.includes('id="' + id + '"'), "storefront contains #" + id);
 
-for (const path of ["script.js","admin.js"]) {
+const productPage = read("product-page.html");
+const productScript = read("product-page.js");
+check(productPage.includes("id=\\"detailName\\"") && productPage.includes("product-page.css"), "product detail page contains its detail layout and stylesheet");
+check(productScript.includes("flowerine-cart") && productScript.includes("from(\\"products\\""), "product detail page can add to the shared cart and load live products");
+for (const path of ["script.js","admin.js","product-page.js"]) {
   const code = read(path);
   check(!code.includes("SUPABASE_SERVICE_ROLE_KEY") && !code.includes("service_role"), path + " contains no service-role credential reference");
 }
