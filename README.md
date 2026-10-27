@@ -75,7 +75,7 @@ This is a static site; no frontend build step is required.
 
 4. Visit http://localhost:8000.
 
-You can also open `index.html directly, but a local server is recommended for consistent browser behavior. Supabase-powered features will work only after backend configuration and setup.
+You can also open `index.html` directly, but a local server is recommended for consistent browser behavior. Supabase-powered features will work only after backend configuration and setup.
 
 ## Configure Supabase
 
