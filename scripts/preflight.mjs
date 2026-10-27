@@ -22,7 +22,7 @@ const html = read("index.html");
 const ids = ["productGrid","bouquetBuilder","deliveryDate","orderOccasion","whatsappOrderButton","orderForm","checkoutModal","newsletterForm"];
 for (const id of ids) check(html.includes('id="' + id + '"'), "storefront contains #" + id);
 
-const productPage = read("product-page.html");
+const productPage = read("product.html");
 const productScript = read("product-page.js");
 check(productPage.includes("id=\\"detailName\\"") && productPage.includes("product-page.css"), "product detail page contains its detail layout and stylesheet");
 check(productScript.includes("flowerine-cart") && productScript.includes("from(\\"products\\""), "product detail page can add to the shared cart and load live products");
