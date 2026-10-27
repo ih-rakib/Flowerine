@@ -24,8 +24,8 @@ for (const id of ids) check(html.includes('id="' + id + '"'), "storefront contai
 
 const productPage = read("product.html");
 const productScript = read("product-page.js");
-check(productPage.includes("id=\\"detailName\\"") && productPage.includes("product-page.css"), "product detail page contains its detail layout and stylesheet");
-check(productScript.includes("flowerine-cart") && productScript.includes("from(\\"products\\""), "product detail page can add to the shared cart and load live products");
+check(productPage.includes('id="detailName"') && productPage.includes("product-page.css"), "product detail page contains its detail layout and stylesheet");
+check(productScript.includes("flowerine-cart") && productScript.includes('from("products"'), "product detail page can add to the shared cart and load live products");
 for (const path of ["script.js","admin.js","product-page.js"]) {
   const code = read(path);
   check(!code.includes("SUPABASE_SERVICE_ROLE_KEY") && !code.includes("service_role"), path + " contains no service-role credential reference");
